@@ -1,5 +1,9 @@
 import datetime
 from dateutil.relativedelta import relativedelta
+import calendar
+
+
+
 def selector():
     # This function is used to select the function to be executed before i had the function call on itself and realized this leads to stack overflow so i changed it into a while true loop 
     while True:
@@ -7,8 +11,9 @@ def selector():
 Select the function you want to execute:
 1. Time to current date
 2. Time between two dates
-3. Time to future date             
-4. Exit""")
+3. Time to future date
+4. Day of the week                          
+5. Exit""")
 
         choice = input("Enter your choice: ")
 
@@ -17,13 +22,15 @@ Select the function you want to execute:
         elif choice == '2':
             timebetween()
         elif choice == '3':
-            timetofuture()    
+            timetofuture()   
         elif choice == '4':
+            day_of_week()     
+        elif choice == '5':
             print("Thanks for using ChronoCalc. Goodbye!")
             break # use break instead of exit for graceful termination ie graceful termination means that the program will close all resources when exiting the app and close connections without immediately ending the program
         else:
             print("Invalid choice. Please try again.")
-            
+
 
 def timetocurrent():
     # This function calculates the time difference to the current date 
@@ -95,11 +102,18 @@ def timebetween():
         date1, date2 = date2, date1
     
     difference = relativedelta(date2, date1)
-
-
-    
     # Now we can print the difference
     print(f"The difference is: {difference.years} years, {difference.days} days, {difference.hours} hours, and {difference.minutes} minutes.")
+
+def day_of_week():
+    # This function calculates the day of the week for a given date
+    date = get_valid_date("Enter the date (YYYY/MM/DD): ")
+
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    day_of_week = days[date.weekday()]
+
+    print(f"The day of the week is: {day_of_week}")
+
 
 def get_valid_date(prompt , with_time = False):
     # This function is used to get a valid date from the user
